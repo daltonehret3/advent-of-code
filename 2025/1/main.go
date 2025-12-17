@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"os"
+	"strconv"
+	"fmt"
+)
 
 const DIAL_MAX = 99
 const DIAL_MIN = 0
@@ -14,7 +19,11 @@ func turnDial(input string, currentPosition int) int {
 
 	var steps int
 
-	fmt.Sscanf(input[1:], "%d", &steps)
+	if len(input) > 2 {
+		steps, _ = strconv.Atoi(input[len(input)-2:])
+	} else {
+		steps, _ = strconv.Atoi(input[1:])
+	}
 
 	if direction == 'L' {
 		dialPosition -= steps
@@ -32,9 +41,29 @@ func turnDial(input string, currentPosition int) int {
 }
 
 func main() {
-	dialPosition := turnDial("R100", DIAL_POSITION)
+	dialTurns := []string{}
+	password := 0
+	dialPosition := 50
 
-	fmt.Printf("Final Dial Position: %d\n", dialPosition)
+	file, _ := os.Open("2025/1/input.txt")
 
-	fmt.Println("Hello, World!")
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		dialTurns = append(dialTurns, scanner.Text())
+	}
+
+	for _, turn := range dialTurns {
+		newDialPosition := turnDial(turn, dialPosition)
+
+		dialPosition = newDialPosition
+
+		if dialPosition == 0 {
+			password ++
+		}
+	}
+
+	fmt.Println("Password:", password)
+
+	file.Close()
 }
