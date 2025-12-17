@@ -12,13 +12,14 @@ const DIAL_MIN = 0
 
 var DIAL_POSITION = 0
 
-func turnDial(input string, currentPosition int) int {
+func partOne(input string, currentPosition int) int {
 	dialPosition := currentPosition
 
 	direction := input[0]
 
 	var steps int
 
+	// TODO: Very hacky way to get steps, needs improvement for Part Two
 	if len(input) > 2 {
 		steps, _ = strconv.Atoi(input[len(input)-2:])
 	} else {
@@ -40,6 +41,10 @@ func turnDial(input string, currentPosition int) int {
 	return dialPosition
 }
 
+func partTwo(input string) int {
+	return 0
+}
+
 func main() {
 	dialTurns := []string{}
 	password := 0
@@ -54,7 +59,7 @@ func main() {
 	}
 
 	for _, turn := range dialTurns {
-		newDialPosition := turnDial(turn, dialPosition)
+		newDialPosition := partOne(turn, dialPosition)
 
 		dialPosition = newDialPosition
 
