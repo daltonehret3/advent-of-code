@@ -8,36 +8,27 @@ import (
 )
 
 func step1(input string) int {
-	final := 0
-	maxNumber := 0
-	secondMax := 0
-	position := 0
+	maxNum := -1
+	maxPos := -1
 
 	for i, character := range input {
-		val := string(character)
-
-		number, _ := strconv.Atoi(val)
-
-		if (number > maxNumber) && i != len(input) -1 {
-			position = i
-			maxNumber = number	
-		}
-
-	}
-
-	for j := (position + 1); j < len(input); j++ {
-		secondVal := string(input[j])
-		secondNum, _ := strconv.Atoi(secondVal)
-
-		if secondNum > secondMax && j != position {
-			secondMax = secondNum
+		num := int(character - '0')
+		if num > maxNum && i != len(input)-1 {
+			maxNum = num
+			maxPos = i
 		}
 	}
 
-	finalString := strconv.Itoa(maxNumber) + strconv.Itoa(secondMax)
+	secondMax := -1
+	for j := maxPos + 1; j < len(input); j++ {
+		num := int(input[j] - '0')
+		if num > secondMax {
+			secondMax = num
+		}
+	}
 
-	final, _ = strconv.Atoi(finalString)
-
+	finalString := strconv.Itoa(maxNum) + strconv.Itoa(secondMax)
+	final, _ := strconv.Atoi(finalString)
 	return final
 }
 
