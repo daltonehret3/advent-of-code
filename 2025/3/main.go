@@ -33,7 +33,6 @@ func step1(input string) int {
 }
 
 func main() {
-	powerBanks := []string{}
 	totalPower := 0
 
 	file, _ := os.Open("2025/3/input.txt")
@@ -41,14 +40,8 @@ func main() {
 	scanner := bufio.NewScanner(file)
 
 	for scanner.Scan() {
-		powerBanks = append(powerBanks, scanner.Text())
+		totalPower += step1(scanner.Text())
 	}
 
-	for _, bank := range powerBanks {
-		power := step1(bank)
-
-		totalPower += power
-	}
-
-	fmt.Println("Final Power: ", totalPower)
+	fmt.Println("Final Power:", totalPower)
 }
