@@ -32,6 +32,39 @@ func step1(input string) int {
 	return final
 }
 
+func step2(input string) int {
+	lastPosition := 11
+	finalString := ""
+	startingPos := 0
+
+	for lastPosition >= 0 {
+		maxNum := -1
+
+		for i, character := range input[: len(input) - lastPosition] {
+			num := int(character - '0')
+
+			if i < startingPos {
+				continue
+			}
+
+			if num > maxNum {
+				maxNum = num
+				startingPos = i +1
+			}
+		}
+
+		finalString += strconv.Itoa(maxNum)
+		lastPosition--
+	}
+
+	final, _ := strconv.Atoi(finalString)
+
+	fmt.Println("Final: ", final)
+	fmt.Println("LENGTH: ", len(finalString))
+
+	return final
+}
+
 func main() {
 	totalPower := 0
 
@@ -40,7 +73,7 @@ func main() {
 	scanner := bufio.NewScanner(file)
 
 	for scanner.Scan() {
-		totalPower += step1(scanner.Text())
+		totalPower += step2(scanner.Text())
 	}
 
 	fmt.Println("Final Power:", totalPower)
